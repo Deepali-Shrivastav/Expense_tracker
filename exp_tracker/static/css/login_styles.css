@@ -1,0 +1,149 @@
+/* login_styles.css */
+
+/* Basic setup for the whole page */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f0f2f5, #dfe3ee); /* Soft gradient background */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+
+    /* Flexbox to center the container both vertically and horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Outer wrapper to help with layout scaling */
+.container {
+    /* width: 100%; Slightly wider container as you wanted */
+    width: 450px;
+    display: flex;
+    justify-content: center; /* Center form-container inside */
+    align-items: center;
+}
+
+/* Login box */
+.form-container {
+    background-color: #ffffff; /* White card-style box */
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Soft shadow */
+    width: 100%;
+    /* max-width: 700px; Wider than default (adjust if needed) */
+    }
+
+/* Form heading */
+h2 {
+    color: #333333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Labels for inputs */
+.form label {
+    font-weight: 600;
+    display: block;
+    margin-top: 20px;
+    color: #555;
+}
+
+/* Text and password input styles */
+.form input[type="text"],
+.form input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border 0.3s ease;
+}
+
+/* Focus effect for inputs */
+.form input[type="text"]:focus,
+.form input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button section */
+.button-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Login button style */
+button.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for button */
+button.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Here start login page styling */
+
+/* Style for Django's error message */
+p {
+    color: #d9534f; /* Bootstrap danger color */
+    background-color: #f8d7da;
+    padding: 12px 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Align the form properly */
+/* form {
+    width: 100%;
+} */
+ 
+/* Style for the form labels and inputs rendered by Django */
+.form label {
+    display: block;
+    font-weight: 600;
+    margin-top: 16px;
+    color: #555;
+}
+
+.form input[type="text"],
+.form input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Style for the submit input */
+input[type="submit"].btn {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for submit */
+input[type="submit"].btn:hover {
+    background-color: #0056b3;
+}
+
+/* Optional: Reduce the gap between label/input pairs */
+.form br {
+    display: none;
+}
