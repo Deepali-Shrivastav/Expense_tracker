@@ -41,16 +41,16 @@ def generate_graph(data):
         xaxis=dict(rangeslider=dict(visible=True)),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        font_color = 'rgba(0,0,0,0)'
+        font_color = 'rgba(0,0,0,1)'
     )
-    fig.update_traces(marker_color='008c41')
+    fig.update_traces(marker_color='#008c41')
 
     graph_json = fig.to_json()
     return graph_json
 
 
 class ExpenseListView(FormView):
-    template_name = 'expenses/expense_list.html'
+    template_name = 'exp_tracker/expenses_list.html'
     form_class = ExpenseForm
     success_url = '/'
 
@@ -120,7 +120,7 @@ class ExpenseListView(FormView):
                     expense_data[year_month].append({
                         'name': expense.name,
                         'amount': expense.amount,
-                        'date': expense.date,
+                        'date': current.date,
                         'end_date': expense.end_date,
                         'long_term': expense.long_term,
                     })
@@ -138,7 +138,7 @@ class ExpenseListView(FormView):
                         'date': expense.date,
                     })
 
-        aggregated_data = [{ 'year_month': key, 'expenses': sum(item['amount'] for item in value)} for key, value in expense_data_graph.item()]
+        aggregated_data = [{ 'year_month': key, 'expenses': sum(item['amount'] for item in value)} for key, value in expense_data_graph.items()]
 
         context['expense_data'] = expense_data
         context['aggregated_data'] = aggregated_data
