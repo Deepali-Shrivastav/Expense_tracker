@@ -42,7 +42,7 @@
                 <h2> Expenses List </h2>
 
                 <div class="expenses">
-                    {% for year_month, expenses, in expense_data.items %}
+                    {% for year_month, expenses in expense_data.items %}
                     <div class="month">
                         <h3> Month: {{ year_month }} </h3>
                         {% for expense in expenses %}
