@@ -24,8 +24,8 @@ class Expense(models.Model):
 
     def save(self, *args, **kwargs):
         if self.long_term:
-            self.monthly_expenses = calculate_monthly_expense
-        super(Expenses, self).save(*args, **kwargs)
+            self.monthly_expenses = self.calculate_monthly_expense()
+        super(Expense, self).save(*args, **kwargs)
 
 
     def calculate_monthly_expense(self):
@@ -34,8 +34,9 @@ class Expense(models.Model):
                 return self.amount / ((self.end_date - self.date) /30)
             else:
                 months = (self.end_date.year - datetime.now().year) * 12 + self.end_date.month - datetime.now().month
-                monthly_rate = self.interest / 12 /100
-                monthly_expense = (self.amount * monthly_rate) / (1 - (1 + monthly) ** -months)
+                monthly_rate = self.interest_rate / 12 /100
+                monthly_expense = (self.amount * monthly_rate) / (1 - (1 + monthly_rate) ** -months)
+                return round(monthly_expense, 2)
         else:
             return self.monthly_expense
 

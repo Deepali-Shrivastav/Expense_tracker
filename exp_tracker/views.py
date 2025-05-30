@@ -111,7 +111,7 @@ class ExpenseListView(FormView):
         for account in accounts:
             expenses = account.expense_list.all()
             for expense in expenses:
-                if expense.long_term and expense.monthly_expense:
+                if expense.long_term and expense.monthly_expenses:
                     current_date = expense.date
                     year_month = current_date.strftime('%Y-%m')
                     if year_month not in expense_data:
