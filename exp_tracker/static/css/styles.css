@@ -1,0 +1,191 @@
+/* styles.css */
+
+/* ===== Global Reset and Body Styling ===== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f0f2f5, #dfe3ee);
+    margin: 0;
+    padding: 20px;
+}
+
+/* ===== Main Container ===== */
+.main {
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Logo Styling ===== */
+.img {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.img img {
+    width: 180px;
+    height: auto;
+}
+
+/* ===== Top Content Layout: Graph + Expense List ===== */
+.main-1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+/* ===== Graph Section ===== */
+.graph {
+    flex: 1 1 45%;
+    background: #fafafa;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bar-chart h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.plotly_chart {
+    width: 100%;
+    height: 400px;
+}
+
+/* ===== Expense List Section ===== */
+.expense {
+    flex: 1 1 45%;
+    background: #fafafa;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.expense h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Each month's expenses */
+.month {
+    margin-bottom: 25px;
+}
+
+.month h3 {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+/* Individual expense item */
+.exp_list {
+    display: flex;
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+}
+
+.exp_list:hover {
+    transform: scale(1.01);
+}
+
+/* Left side: name & date */
+.left h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.left .date {
+    font-size: 14px;
+    color: #777;
+}
+
+/* Right side: amount */
+.right h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #28a745;
+}
+
+/* ===== Form Section (Bottom) ===== */
+.lower {
+    margin-top: 40px;
+}
+
+.exp_form {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.exp_form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* Input fields */
+.exp_form label {
+    display: block;
+    font-weight: 600;
+    margin-top: 20px;
+    color: #555;
+}
+
+.exp_form input[type="text"],
+.exp_form input[type="number"],
+.exp_form input[type="date"],
+.exp_form select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.exp_form input:focus,
+.exp_form select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Submit button */
+button.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+button.btn:hover {
+    background-color: #0056b3;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 900px) {
+    .main-1 {
+        flex-direction: column;
+    }
+
+    .graph,
+    .expense {
+        width: 100%;
+    }
+}
