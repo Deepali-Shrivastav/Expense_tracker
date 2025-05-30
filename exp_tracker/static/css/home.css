@@ -1,0 +1,71 @@
+/* home.css */
+
+/* Page background and font */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f0f2f5, #dfe3ee);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main container similar to form-container */
+.home {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 450px;
+}
+
+/* Welcome text */
+h2 {
+    color: #333333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Styling for register and login sections */
+.reg, .log {
+    margin: 20px 0;
+}
+
+/* Links styled like buttons */
+.reg a,
+.log a,
+a {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for links */
+.reg a:hover,
+.log a:hover,
+a:hover {
+    background-color: #0056b3;
+}
+
+/* Authenticated user view (optional card style) */
+.authenticated-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 450px;
+}
+
+.authenticated-container a {
+    margin-top: 20px;
+    display: inline-block;
+}
