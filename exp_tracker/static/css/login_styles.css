@@ -1,149 +1,299 @@
-/* login_styles.css */
+/* Auth pages styling */
+:root {
+    --primary-color: #4299e1;
+    --primary-dark: #3182ce;
+    --text-primary: #2d3748;
+    --text-secondary: #718096;
+    --error-color: #e53e3e;
+    --success-color: #48bb78;
+    --border-color: #e2e8f0;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f7fafc;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
 
-/* Basic setup for the whole page */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f0f2f5, #dfe3ee); /* Soft gradient background */
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-
-    /* Flexbox to center the container both vertically and horizontally */
+.auth-page {
+    min-height: 100vh;
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
+    background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+    padding: 1.5rem;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Outer wrapper to help with layout scaling */
-.container {
-    /* width: 100%; Slightly wider container as you wanted */
-    width: 450px;
+.auth-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center; /* Center form-container inside */
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Branding */
+.auth-brand {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.brand-link {
+    display: inline-flex;
     align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
-/* Login box */
-.form-container {
-    background-color: #ffffff; /* White card-style box */
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Soft shadow */
+.brand-icon {
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+
+/* Card */
+.auth-card {
+    background: var(--bg-primary);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
     width: 100%;
-    /* max-width: 700px; Wider than default (adjust if needed) */
-    }
+    max-width: 480px;
+    margin: 0 auto;
+}
 
-/* Form heading */
-h2 {
-    color: #333333;
-    margin-bottom: 30px;
+.auth-header {
     text-align: center;
+    margin-bottom: 2.5rem;
 }
 
-/* Labels for inputs */
-.form label {
-    font-weight: 600;
-    display: block;
-    margin-top: 20px;
-    color: #555;
+.auth-header h1 {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
 }
 
-/* Text and password input styles */
-.form input[type="text"],
-.form input[type="password"] {
-    width: 100%;
-    padding: 12px 15px;
-    margin-top: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: border 0.3s ease;
-}
-
-/* Focus effect for inputs */
-.form input[type="text"]:focus,
-.form input[type="password"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Button section */
-.button-container {
-    text-align: center;
-    margin-top: 30px;
-}
-
-/* Login button style */
-button.btn {
-    background-color: #007bff;
-    color: white;
+.auth-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    background: none;
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 0;
+    margin: 0;
+}
+
+/* Form */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-group label i {
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.form-group input {
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.2s;
+    color: var(--text-primary);
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+/* Password Requirements */
+
+
+/* Error Messages */
+.error-message {
+    background: #fff5f5;
+    color: var(--error-color);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #fed7d7;
+}
+
+.error-content {
+    margin-left: 0.5rem;
+}
+
+.error-content h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.error-content ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+}
+
+.error-content li {
+    margin-bottom: 0.25rem;
+}
+
+/* Button */
+.auth-button {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.875rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    width: 100%;
+    margin-top: 1rem;
 }
 
-/* Hover effect for button */
-button.btn:hover {
-    background-color: #0056b3;
+.auth-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
-/* Here start login page styling */
+.auth-button:active {
+    transform: translateY(0);
+}
 
-/* Style for Django's error message */
-p {
-    color: #d9534f; /* Bootstrap danger color */
-    background-color: #f8d7da;
-    padding: 12px 20px;
-    border: 1px solid #f5c6cb;
-    border-radius: 8px;
-    margin-bottom: 20px;
+/* Links */
+.auth-links {
     text-align: center;
+    color: var(--text-secondary);
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.auth-links a {
+    color: var(--primary-color);
+    text-decoration: none;
     font-weight: 500;
 }
 
-/* Align the form properly */
-/* form {
-    width: 100%;
-} */
- 
-/* Style for the form labels and inputs rendered by Django */
-.form label {
-    display: block;
-    font-weight: 600;
-    margin-top: 16px;
-    color: #555;
+.auth-links a:hover {
+    text-decoration: underline;
 }
 
-.form input[type="text"],
-.form input[type="password"] {
-    width: 100%;
-    padding: 12px 15px;
-    margin-top: 6px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
+/* Features Grid */
+.auth-footer {
+    margin-top: 2rem;
 }
 
-/* Style for the submit input */
-input[type="submit"].btn {
-    background-color: #007bff;
-    color: white;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 480px;
+    margin: 0 auto;
 }
 
-/* Hover effect for submit */
-input[type="submit"].btn:hover {
-    background-color: #0056b3;
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 1rem;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
 }
 
-/* Optional: Reduce the gap between label/input pairs */
-.form br {
-    display: none;
+.feature i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
 }
+
+.feature span {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+}
+
+.toastify {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: var(--shadow-lg);
+    border-left: 4px solid var(--primary-color);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toastify.success {
+    border-left-color: var(--success-color);
+}
+
+.toastify.error {
+    border-left-color: var(--error-color);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .auth-page {
+        padding: 1rem;
+    }
+
+    .auth-card {
+        padding: 1.5rem;
+    }
+
+    .auth-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .feature {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
