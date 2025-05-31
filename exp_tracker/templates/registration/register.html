@@ -1,34 +1,92 @@
+{% extends 'base.html' %}
 {% load static %}
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/login_styles.css' %}">
-</head>
+
+{% block title %}Create Account - Expense Tracker{% endblock %}
+
 {% block content %}
-    <form method="post">
-            {% csrf_token %}
-            <div class="container">
-                <div class="form-container">
-                    <div class="form">
-                        <h2 style="text-align: center;"> Sign Up </h2>
-                        {{ form.username.label_tag }}
-                        <br>
-                        {{ form.username }}
-                        <br>
-                        {{ form.password1.label_tag }}
-                        <br>
-                        {{ form.password1 }}
-                        <br>
-                        {{ form.password2.label_tag }}
-                        <br>
-                        {{ form.password2 }}
-                    </div>
-                    <br>
-                    <div class="button-container">
-                        <button class="btn btn-primary" type="submit">
-                            Register
-                        </button>
-                    </div>
-                </div>
+<div class="auth-page">
+    <div class="auth-container">
+        <!-- Logo/Branding Section -->
+        <div class="auth-brand">
+            <a href="{% url 'home' %}" class="brand-link">
+                <i class="fas fa-wallet brand-icon"></i>
+                <span>Expense Tracker</span>
+            </a>
+        </div>
+
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Create Your Account</h1>
+                <p>Join thousands of users managing their expenses smarter</p>
             </div>
 
-    </form>
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="error-content">
+                        <h4>Please fix the following errors:</h4>
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    {{ form.username }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    {{ form.password1 }}
+
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}">
+                        <i class="fas fa-lock"></i> Confirm Password
+                    </label>
+                    {{ form.password2 }}
+                </div>
+
+                <button type="submit" class="auth-button">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+
+                <div class="auth-links">
+                    <p>Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-footer">
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Track Expenses</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Mobile Ready</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
