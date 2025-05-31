@@ -1,31 +1,79 @@
+{% extends 'base.html' %}
 {% load static %}
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/login_styles.css' %}">
-</head>
+
+{% block title %}Sign In - Expense Tracker{% endblock %}
+
 {% block content %}
 
-    {% if form.errors %}
-        <p> Your Username and Password didn't match. Please Try Again </p>
-    {% endif %}
+<div class="auth-page">
+    <div class="auth-container">
+        <!-- Logo/Branding Section -->
+        <div class="auth-brand">
+            <a href="{% url 'home' %}" class="brand-link">
+                <i class="fas fa-wallet brand-icon"></i>
+                <span>Expense Tracker</span>
+            </a>
+        </div>
 
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-            <div class="container">
-                <div class="form-container">
-                    <div class="form">
-                        <h2 style="text-align: center;"> Sign In </h2>
-                        {{ form.username.label_tag }}
-                        {{ form.username }}
-                        <br><br>
-                        {{ form.password.label_tag }}
-                        {{ form.password }}
-                    </div>
-                    <br>
-                    <div class="button-container">
-                        <input class="btn btn-primary" type="submit" value="Login"/>
-                    </div>
-                </div>
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to manage your expenses</p>
             </div>
 
-    </form>
+            <form method="post" action="{% url 'login' %}" class="auth-form">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="error-content">
+                        <p>Your username and password didn't match. Please try again.</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    {{ form.username }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    {{ form.password }}
+                </div>
+
+                <button type="submit" class="auth-button">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+
+                <div class="auth-links">
+                    <p>New here? <a href="{% url 'register' %}">Create Account</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-footer">
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Track Expenses</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Mobile Ready</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
