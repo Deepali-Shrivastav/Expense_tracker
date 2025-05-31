@@ -4,6 +4,7 @@
 </head>
 {% block content %}
     <form method="post">
+            {% csrf_token %}
             <div class="container">
                 <div class="form-container">
                     <div class="form">
