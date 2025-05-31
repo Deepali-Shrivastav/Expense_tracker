@@ -1,111 +1,181 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<head>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-</head>
+{% block title %}Expenses - Expense Tracker{% endblock %}
 
 {% block content %}
-<body>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            var longTermCheckBox = $('#id_long_term');
-            var longTermFields = $('#interest_rate, #end_date');
-
-            longTermFields.hide();
-
-            longTermCheckBox.on('change', function () {
-                if (longTermCheckBox.is(':checked')) {
-                    longTermFields.show();
-                } else {
-                    longTermFields.hide();
-                }
-            });
-        });
-    </script>
-
-    <div class="main">
-        <div class="img">
-            <img src="{% static 'images/logo.png' %}" >
+<!-- Navigation Bar -->
+<nav class="main-nav">
+    <div class="nav-container">
+        <div class="nav-brand">
+            <i class="fas fa-wallet"></i>
+            <span>Expense Tracker</span>
         </div>
+        <div class="nav-actions">
+            <a href="{% url 'logout' %}" class="nav-link">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+</nav>
 
-        <div class="main-1">
-            <div class="graph">
-                <div class="bar-chart">
-                    <h2> Monthly Expenses Bar Chart </h2>
-                    <div class="plotly_chart", id="plotly_chart"></div>
-                </div>
-            </div>
-            <div class="expense">
-                <h2> Expenses List </h2>
+<!-- Main Content -->
+<main class="main-content">
+    <div class="page-container">
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>My Expenses</h1>
+        </header>
 
-                <div class="expenses">
+        <!-- Scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var longTermCheckBox = $('#id_long_term');
+                var longTermFields = $('#interest_rate, #end_date');
+
+                longTermFields.hide();
+
+                longTermCheckBox.on('change', function () {
+                    if (longTermCheckBox.is(':checked')) {
+                        longTermFields.show();
+                    } else {
+                        longTermFields.hide();
+                    }
+                });
+            });
+        </script>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Graph Section -->
+            <section class="dashboard-card graph-section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Monthly Expenses Overview
+                </h2>
+                <div class="plotly-chart" id="plotly-chart"></div>
+            </section>
+
+            <!-- Expenses List Section -->
+            <section class="dashboard-card expenses-section">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i>
+                    Expenses List
+                </h2>
+
+                <div class="expenses-list">
                     {% for year_month, expenses in expense_data.items %}
-                    <div class="month">
-                        <h3> Month: {{ year_month }} </h3>
+                    <div class="month-group">
+                        <h3 class="month-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            {{ year_month }}
+                        </h3>
                         {% for expense in expenses %}
-                        <div class="exp_list">
-                            <div class="left">
-                                <h2> {{ expense.name }} </h2>
-                                {% if expense.long_term %}
-                                <span class="date"> Date - From: {{ expense.date }} <br> To: {{ expense.end_date }} </span>
-                                {% else %}
-                                <span class="date"> Date: {{ expense.date }} </span>
-                                {% endif %}
+                        <div class="expense-item">
+                            <div class="expense-details">
+                                <h4 class="expense-name">{{ expense.name }}</h4>
+                                <div class="expense-date">
+                                    {% if expense.long_term %}
+                                    <i class="fas fa-calendar-week"></i>
+                                    <span>From: {{ expense.date }}</span><br>
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span>To: {{ expense.end_date }}</span>
+                                    {% else %}
+                                    <i class="fas fa-calendar-day"></i>
+                                    <span>{{ expense.date }}</span>
+                                    {% endif %}
+                                </div>
                             </div>
-                            <div class="right">
-                                <h2>₹{{ expense.amount }}</h2>
+                            <div class="expense-amount">
+                                <span class="amount">₹{{ expense.amount }}</span>
                             </div>
                         </div>
-                        <br>
                         {% endfor %}
                     </div>
                     {% endfor %}
                 </div>
+            </section>
 
-            </div>
-        </div>
-        <div class="lower">
-            <div class="exp_form">
-                <h2> Add Long Term Liability or One Time Expense</h2>
-                <form method="post">
+            <!-- Add Expense Section -->
+            <section class="dashboard-card add-expense-section">
+                <h2 class="section-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Add New Expense
+                </h2>
+                <form method="post" class="expense-form">
                     {% csrf_token %}
-                    {{ form.long_term.label_tag }}
-                    {{ form.long_term }}
-                    <br><br>
-                    {{ form.name.label_tag }}
-                    {{ form.name }}
-                    {{ form.amount.label_tag }}
-                    {{ form.amount }}
-                    <br><br>
-                    {{ form.date.label_tag }}
-                    {{ form.date }}
-                    <br><br>
-
-                    <div id="end_date">
-                        {{ form.end_date.label_tag }}
-                        {{ form.end_date }}
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            {{ form.long_term.label_tag }}
+                            {{ form.long_term }}
+                        </div>
                     </div>
-                    <br>
 
-                    <div id="interest_rate">
-                        {{ form.interest_rate.label_tag }}
-                        {{ form.interest_rate }}
+                    <div class="form-group">
+                        <div class="input-group">
+                            <i class="fas fa-tag input-icon"></i>
+                            {{ form.name }}
+                        </div>
                     </div>
-                    <br>
-                    <button type="submit" class="btn btn-success"> Add Liability </button>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <i class="fas fa-rupee-sign input-icon"></i>
+                            {{ form.amount }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <i class="fas fa-calendar input-icon"></i>
+                            {{ form.date }}
+                        </div>
+                    </div>
+
+                    <div id="end_date" class="form-group">
+                        <div class="input-group">
+                            <i class="fas fa-calendar-check input-icon"></i>
+                            {{ form.end_date }}
+                        </div>
+                    </div>
+
+                    <div id="interest_rate" class="form-group">
+                        <div class="input-group">
+                            <i class="fas fa-percentage input-icon"></i>
+                            {{ form.interest_rate }}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-plus"></i> Add Expense
+                    </button>
                 </form>
-            </div>
+            </section>
         </div>
+
+        <!-- Plotly Chart -->
+        <script>
+            var graphData = {{ graph_data | safe }};
+            var layout = {
+                ...graphData.layout,
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: {
+                    family: 'var(--font-family)',
+                    color: 'var(--text-color)'
+                },
+                margin: { t: 20, r: 20, b: 40, l: 60 },
+                height: 400,
+                autosize: true
+            };
+            Plotly.newPlot('plotly-chart', graphData.data, layout);
+            window.addEventListener('resize', function () {
+                Plotly.Plots.resize('plotly-chart');
+            });
+        </script>
     </div>
-
-    <script>
-        var graphData = {{ graph_data | safe }};
-        Plotly.newPlot('plotly-chart', graphData.data, graphData.layout);
-    </script>
-
-</body>
-
+</main>
 {% endblock %}
