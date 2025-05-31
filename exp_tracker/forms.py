@@ -13,7 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         # Remove the username similarity validator
         self.fields['password1'].validators = [v for v in self.fields['password1'].validators 
-                   
+                                            if not v.__class__.__name__ == 'UserAttributeSimilarityValidator']
 
 class ExpenseForm(forms.ModelForm):
     long_term = forms.BooleanField(required=False)
