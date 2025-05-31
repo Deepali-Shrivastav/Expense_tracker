@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Expense Tracker{% endblock %}</title>
+    {% load static %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/login_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    {% block content %}{% endblock %}
+
+    <!-- Django Template Variables -->
+    <script>
+        // Parse Django messages into JavaScript array
+        const djangoMessages = '{% if messages %}[{% for message in messages %}{ "text": "{{ message|escapejs }}", "type": "{{ message.tags|escapejs }}" }{% if not forloop.last %},{% endif %}{% endfor %}]{% else %}[]{% endif %}';
+        window.DJANGO_MESSAGES = JSON.parse(djangoMessages);
+
+        // Parse session message if exists
+        {% if request.session.toast_message %}
+        const sessionMessage = '{ "text": "{{ request.session.toast_message.message|escapejs }}", "type": "{{ request.session.toast_message.type|escapejs }}" }';
+        window.SESSION_MESSAGE = JSON.parse(sessionMessage);
+        {% else %}
+        window.SESSION_MESSAGE = null;
+        {% endif %}
+    </script>
+
+    <!-- Toast System -->
+    <script>
+        const toastSystem = {
+            show: function(message, type = 'success') {
+                const toast = document.createElement('div');
+                toast.className = `toastify ${type}`;
+                toast.style.opacity = '0';
+                toast.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    <span>${message}</span>
+                `;
+                
+                const container = document.getElementById('toast-container');
+                container.appendChild(toast);
+
+                // Trigger reflow for animation
+                toast.offsetHeight;
+                toast.style.opacity = '1';
+
+                // Auto remove after 3 seconds
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            },
+
+            handleUrlMessage: function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const message = urlParams.get('success_message');
+                if (message) {
+                    this.show(decodeURIComponent(message), 'success');
+                    const newUrl = window.location.pathname;
+                    window.history.replaceState({}, document.title, newUrl);
+                }
+            },
+
+            init: function() {
+                // Handle Django messages
+                window.DJANGO_MESSAGES.forEach(msg => this.show(msg.text, msg.type));
+
+                // Handle session message
+                if (window.SESSION_MESSAGE) {
+                    this.show(window.SESSION_MESSAGE.text, window.SESSION_MESSAGE.type);
+                }
+
+                // Handle URL messages
+                this.handleUrlMessage();
+            }
+        };
+
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', () => toastSystem.init());
+    </script>
+</body>
+</html>
