@@ -1,191 +1,213 @@
-/* styles.css */
+:root {
+    --primary-color: #4f46e5;
+    --primary-color-dark: #4338ca;
+    --primary-color-light: rgba(79, 70, 229, 0.1);
+    --text-color: #1f2937;
+    --text-muted: #6b7280;
+    --heading-color: #111827;
+    --border-color: #e5e7eb;
+    --bg-light: #f9fafb;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+    --nav-bg: #ffffff;
+    --nav-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+    --font-family: 'Inter', sans-serif;
+    --container-padding: 0.5rem;
+    --border-radius: 1rem;
+    --border-radius-sm: 0.5rem;
+    --card-shadow: 0 1px 3px rgb(0 0 0 / 10%), 0 1px 2px -1px rgb(0 0 0 / 10%);
+}
 
-/* ===== Global Reset and Body Styling ===== */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f0f2f5, #dfe3ee);
+/* Reset */
+* {
     margin: 0;
-    padding: 20px;
-}
-
-/* ===== Main Container ===== */
-.main {
-    max-width: 1200px;
-    margin: auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-/* ===== Logo Styling ===== */
-.img {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.img img {
-    width: 180px;
-    height: auto;
-}
-
-/* ===== Top Content Layout: Graph + Expense List ===== */
-.main-1 {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: space-between;
-}
-
-/* ===== Graph Section ===== */
-.graph {
-    flex: 1 1 45%;
-    background: #fafafa;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.bar-chart h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.plotly_chart {
-    width: 100%;
-    height: 400px;
-}
-
-/* ===== Expense List Section ===== */
-.expense {
-    flex: 1 1 45%;
-    background: #fafafa;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.expense h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* Each month's expenses */
-.month {
-    margin-bottom: 25px;
-}
-
-.month h3 {
-    color: #007bff;
-    margin-bottom: 15px;
-}
-
-/* Individual expense item */
-.exp_list {
-    display: flex;
-    justify-content: space-between;
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 15px 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease;
-}
-
-.exp_list:hover {
-    transform: scale(1.01);
-}
-
-/* Left side: name & date */
-.left h2 {
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-}
-
-.left .date {
-    font-size: 14px;
-    color: #777;
-}
-
-/* Right side: amount */
-.right h2 {
-    margin: 0;
-    font-size: 20px;
-    color: #28a745;
-}
-
-/* ===== Form Section (Bottom) ===== */
-.lower {
-    margin-top: 40px;
-}
-
-.exp_form {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.exp_form h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 25px;
-}
-
-/* Input fields */
-.exp_form label {
-    display: block;
-    font-weight: 600;
-    margin-top: 20px;
-    color: #555;
-}
-
-.exp_form input[type="text"],
-.exp_form input[type="number"],
-.exp_form input[type="date"],
-.exp_form select {
-    width: 100%;
-    padding: 12px 15px;
-    margin-top: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    padding: 0;
     box-sizing: border-box;
-    transition: border-color 0.3s ease;
 }
 
-.exp_form input:focus,
-.exp_form select:focus {
-    border-color: #007bff;
-    outline: none;
+body {
+    font-family: var(--font-family);
+    background: var(--bg-light);
+    color: var(--text-color);
 }
 
-/* Submit button */
-button.btn {
-    background-color: #007bff;
+/* Navbar */
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    box-shadow: var(--nav-shadow);
+    min-height: 64px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 64px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--heading-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-actions .nav-link {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 8px 16px;
+    border-radius: var(--border-radius-sm);
+    transition: background 0.2s;
+}
+
+.nav-actions .nav-link:hover {
+    background-color: var(--primary-color-light);
+    color: var(--primary-color);
+}
+
+/* Content */
+.main-content {
+    padding-top: 64px;
+    min-height: calc(100vh - 64px);
+    background: var(--bg-light);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 1rem;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--heading-color);
+    margin-bottom: 2rem;
+}
+
+/* Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.dashboard-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Expense List */
+.expenses-list .month-group {
+    margin-bottom: 1.5rem;
+}
+
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    padding: 1rem;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 0.75rem;
+}
+
+.expense-name {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.expense-date span {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.expense-amount .amount {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #10b981;
+}
+
+/* Form */
+.expense-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--input-bg);
+    padding: 0.75rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.input-icon {
+    color: var(--primary-color);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-color);
     color: white;
+    font-weight: bold;
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
+    transition: background 0.2s;
 }
 
-button.btn:hover {
-    background-color: #0056b3;
+.btn:hover {
+    background: var(--primary-color-dark);
 }
 
-/* ===== Responsive Design ===== */
-@media (max-width: 900px) {
-    .main-1 {
-        flex-direction: column;
+.btn-block {
+    width: 100%;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
+}
 
-    .graph,
-    .expense {
-        width: 100%;
+@media (max-width: 767px) {
+    .page-container {
+        padding: 0.5rem;
+    }
+    
+    .dashboard-grid {
+        gap: 1rem;
     }
 }
