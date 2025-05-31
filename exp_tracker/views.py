@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from exp_tracker import models
 from .models import Account, Expense
-from .forms import ExpenseForm
+from .forms import ExpenseForm, CustomUserCreationForm
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.views.generic import ListView
@@ -25,22 +25,57 @@ def home(request):
     return render(request, 'home/home.html')
 
 
+from django.contrib.auth.password_validation import MinimumLengthValidator, CommonPasswordValidator, NumericPasswordValidator
+from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+
+class CustomUserCreationForm(BaseUserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remove the default help text
+        self.fields['password1'].help_text = ''
+        self.fields['password2'].help_text = ''
+
+
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
+            form.save()
+            request.session['toast_message'] = {
+                'message': 'Registration successful! Please log in with your credentials.',
+                'type': 'success'
+            }
+            return redirect('login')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
     
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                request.session['toast_message'] = {
+                    'message': f'Welcome back, {username}!',
+                    'type': 'success'
+                }
+                return redirect('expenses')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
 
 @login_required
 @require_http_methods(['GET', 'POST'])
 def logout_view(request):
     logout(request)
+    request.session['toast_message'] = {
+        'type': 'success',
+        'message': 'You have been logged out successfully.'
+    }
     return redirect('home')
 
 
