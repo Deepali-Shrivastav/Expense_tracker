@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 from exp_tracker import models
 from .models import Account, Expense
 from .forms import ExpenseForm
@@ -34,6 +36,13 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
     
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
 
 def generate_graph(data):
     fig = px.bar(data, x='months', y='expenses', title='Monthly Expenses')
